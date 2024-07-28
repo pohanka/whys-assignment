@@ -32,7 +32,7 @@ const Article = ({ author, text, date }: ArticleProps) => {
       >
         {format(toZonedTime(new Date(date), "UTC"), "dd.MM.yyyy HH:mm")}
       </Text>
-      <Text fontSize={{ mobile: "16px", desktop: "20px" }} textColor="info">
+      <Text fontSize={{ mobile: "16px", desktop: "24px" }} textColor="info">
         {text}
       </Text>
     </Card>
