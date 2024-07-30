@@ -1,4 +1,4 @@
-import { HStack, Text } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 
@@ -10,7 +10,7 @@ export interface CommentProps {
 
 const Comment = ({ author, text, date }: CommentProps) => {
   return (
-    <>
+    <VStack align="left" gap={{ mobile: "2px", desktop: "10px" }}>
       <HStack gap="10">
         <Text
           fontSize={{ mobile: "16px", desktop: "24px" }}
@@ -25,14 +25,14 @@ const Comment = ({ author, text, date }: CommentProps) => {
       </HStack>
 
       <Text
-        fontSize={{ mobile: "20px", desktop: "32px" }}
+        fontSize={{ mobile: "20px", desktop: "30px" }}
         textColor="info"
         fontWeight="medium"
         px="20px"
       >
         {text}
       </Text>
-    </>
+    </VStack>
   );
 };
 

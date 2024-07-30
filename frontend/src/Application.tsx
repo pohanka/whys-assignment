@@ -1,4 +1,11 @@
-import { Flex, Text, VStack, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  VStack,
+  Button,
+  ScaleFade,
+  Collapse,
+} from "@chakra-ui/react";
 import Article, { ArticleProps } from "./components/Article";
 import Comment, { CommentProps } from "./components/Comment";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
@@ -11,12 +18,8 @@ const Application = () => {
   const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setArticle(document.__article);
-    }, 500);
-    setTimeout(() => {
-      setComments(document.__comments);
-    }, 1000);
+    setTimeout(() => setArticle(document.__article), 500);
+    setTimeout(() => setComments(document.__comments), 1000);
   }, []);
 
   const handleShowComments = () => {
@@ -46,50 +49,41 @@ const Application = () => {
         px={{ mobile: "20px", desktop: "40px" }}
         flexDirection={{ mobile: "column", desktop: "row" }}
         gap={{ mobile: "20px", desktop: "40px" }}
+        mb="40px"
       >
-        {article && (
-          <Article
-            author={article.author}
-            text={article.text}
-            date={article.date}
-          />
-        )}
-        <VStack
-          align="left"
-          w="full"
-          gap={{ mobile: "10px", desktop: "30px" }}
-          pt={{ desktop: "20px" }}
-          px={{ mobile: "20px", desktop: "0px" }}
-        >
-          {comments.map((comment, index) => (
-            <Comment
-              key={index}
-              author={comment.author}
-              text={comment.text}
-              date={comment.date}
+        <ScaleFade initialScale={0.8} in={article !== null}>
+          {article && (
+            <Article
+              author={article.author}
+              text={article.text}
+              date={article.date}
             />
-          ))}
+          )}
+        </ScaleFade>
 
-          {comments.length != 0 &&
-            (!showComments ? (
-              <Button
-                w="fit-content"
-                mb="40px"
-                bg="none"
-                _hover={{ bg: "none" }}
-                _focus={{ bg: "none" }}
-                _active={{ bg: "none" }}
-                textColor="shadow"
-                fontSize={{ mobile: "14px", desktop: "20px" }}
-                gap="2"
-                px="0"
-                onClick={handleShowComments}
+        <ScaleFade initialScale={0.8} in={comments.length != 0}>
+          <VStack
+            align="left"
+            w="full"
+            gap={{ mobile: "10px", desktop: "30px" }}
+            pt={{ desktop: "20px" }}
+            px={{ mobile: "20px", desktop: "0px" }}
+          >
+            {comments.map((comment, index) => (
+              <Comment
+                key={index}
+                author={comment.author}
+                text={comment.text}
+                date={comment.date}
+              />
+            ))}
+
+            <Collapse in={showComments} transition={{ enter: { duration: 1 } }}>
+              <VStack
+                align="left"
+                w="full"
+                gap={{ mobile: "10px", desktop: "30px" }}
               >
-                Show more comments
-                <HiChevronDown />
-              </Button>
-            ) : (
-              <>
                 {moreComments.map((comment, index) => (
                   <Comment
                     key={index}
@@ -98,25 +92,26 @@ const Application = () => {
                     date={comment.date}
                   />
                 ))}
+              </VStack>
+            </Collapse>
 
-                <Button
-                  w="fit-content"
-                  mb="40px"
-                  bg="none"
-                  _hover={{ bg: "none" }}
-                  _focus={{ bg: "none" }}
-                  _active={{ bg: "none" }}
-                  textColor="shadow"
-                  gap="2"
-                  px="0"
-                  onClick={handleShowComments}
-                >
-                  Show less comments
-                  <HiChevronUp />
-                </Button>
-              </>
-            ))}
-        </VStack>
+            <Button
+              w="fit-content"
+              bg="none"
+              _hover={{ bg: "none" }}
+              _focus={{ bg: "none" }}
+              _active={{ bg: "none" }}
+              textColor="shadow"
+              fontSize={{ mobile: "14px", desktop: "20px" }}
+              gap="2"
+              px="0"
+              onClick={handleShowComments}
+            >
+              {!showComments ? "Show more comments" : "Show less comments"}
+              {!showComments ? <HiChevronDown /> : <HiChevronUp />}
+            </Button>
+          </VStack>
+        </ScaleFade>
       </Flex>
     </Flex>
   );

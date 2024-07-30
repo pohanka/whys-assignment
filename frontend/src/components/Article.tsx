@@ -11,7 +11,7 @@ export interface ArticleProps {
 const Article = ({ author, text, date }: ArticleProps) => {
   return (
     <Card
-      w="fit-content"
+      w={{ mobile: "full", desktop: "580px" }}
       h="fit-content"
       borderWidth="0.5px"
       borderColor="shadowing"

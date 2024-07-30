@@ -6,7 +6,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 const theme = extendTheme({
   breakpoints: {
     mobile: 0,
-    desktop: "768px",
+    desktop: "1024px",
   },
   colors: {
     primary: "#83C5BE",
